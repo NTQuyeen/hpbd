@@ -19,23 +19,13 @@
 
   /* ================= LOGIN SCREEN ================= */
   #loginScreen {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    z-index: 10;
+    height: 100vh; display: flex; justify-content: center; align-items: center;
+    position: relative; z-index: 10;
   }
   .login-box {
-    width: 350px;
-    padding: 40px 30px;
-    background: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: 25px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    width: 350px; padding: 40px 30px; background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 25px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1); text-align: center;
   }
   .login-box h2 { margin: 0 0 20px; color: #ff477e; font-size: 1.5rem; }
   .display {
@@ -52,168 +42,246 @@
   .ok { background: #ff9a9e !important; color: white !important; }
   .del { background: #d3d3d3 !important; }
 
-  /* ================= CARD SCREEN (THIỆP) ================= */
-  #cardScreen {
-    display: none; 
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh; width: 100vw;
-    position: absolute; top: 0; left: 0;
-    background: linear-gradient(-45deg, #ff9a9e, #fecfef, #a1c4fd, #c2e9fb);
-    background-size: 400% 400%;
-    animation: gradientBG 12s ease infinite;
-    z-index: 10;
-  }
-  
-  @keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+  /* ================= CAKE SCREEN ================= */
+  #cakeScreen {
+    display: none; flex-direction: column; align-items: center; justify-content: center;
+    height: 100vh; width: 100vw; position: absolute; top: 0; left: 0;
+    background: linear-gradient(160deg, #ffe8f0 0%, #ffd6e8 50%, #ffcce3 100%);
+    z-index: 20; overflow: hidden;
   }
 
-  .card-container {
-    position: relative;
-    width: 320px;
-    height: 420px;
-    perspective: 1500px;
+  .neon-text {
+    font-size: 35px; font-weight: bold; color: #ff477e;
+    text-align: center; margin-bottom: 20px; z-index: 2;
+    animation: neonGlow 1.5s ease-in-out infinite alternate;
+  }
+  @keyframes neonGlow {
+    0% { text-shadow: 0 0 5px #fff, 0 0 10px #ff9a9e, 0 0 15px #ff758c; transform: scale(1); }
+    100% { text-shadow: 0 0 10px #fff, 0 0 20px #ff477e, 0 0 30px #ff0a54; transform: scale(1.05); }
   }
 
-  /* Ruột thiệp (nằm tĩnh phía sau) */
-  .card-inside {
+  /* SVG Bánh Sinh Nhật */
+  .cake-wrapper {
+    position: relative; z-index: 2;
+    animation: float 3s ease-in-out infinite;
+    width: 300px; height: 320px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+  /* Ánh sáng nến */
+  .candle-glow {
     position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 10px 15px 30px rgba(0,0,0,0.2);
-    padding: 40px 20px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    width: 160px; height: 160px;
+    background: radial-gradient(circle, rgba(255,210,50,0.55) 0%, rgba(255,160,20,0.25) 40%, rgba(255,200,0,0) 70%);
+    top: 28%; left: 50%; transform: translateX(-50%);
+    border-radius: 50%; z-index: 1;
+    animation: flickerGlow 0.4s infinite alternate;
+  }
+  @keyframes flickerGlow {
+    0%   { transform: translateX(-50%) scale(1);    opacity: 0.75; }
+    33%  { transform: translateX(-50%) scale(1.12); opacity: 1;    }
+    66%  { transform: translateX(-50%) scale(0.95); opacity: 0.85; }
+    100% { transform: translateX(-50%) scale(1.08); opacity: 0.95; }
+  }
+
+  /* Tia sáng toả ra */
+  .sparkle-ring {
+    position: absolute;
+    top: 22%; left: 50%; transform: translateX(-50%);
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: transparent;
     z-index: 1;
+    pointer-events: none;
   }
-  .card-inside h3 {
-    color: #ff477e;
-    font-size: 26px;
-    margin-top: 0;
-    margin-bottom: 20px;
+  .sparkle-ring::before {
+    content: '';
+    position: absolute; inset: 0;
+    border-radius: 50%;
+    box-shadow: 0 0 30px 10px rgba(255,200,50,0.3), 0 0 60px 20px rgba(255,150,0,0.15);
+    animation: pulseRing 1.2s ease-in-out infinite alternate;
   }
-  .card-inside p {
-    color: #555;
-    font-size: 18px;
-    line-height: 1.6;
-    font-weight: 500;
+  @keyframes pulseRing {
+    0%   { transform: scale(0.9); opacity: 0.7; }
+    100% { transform: scale(1.1); opacity: 1;   }
   }
 
-  /* Bìa thiệp (có thể lật) */
+  /* Tia nhỏ (sparkles) */
+  .spark {
+    position: absolute; border-radius: 50%;
+    background: #ffe066; z-index: 3; pointer-events: none;
+    animation: sparkAnim var(--dur) ease-in-out infinite var(--delay) alternate;
+  }
+  @keyframes sparkAnim {
+    0%   { opacity: 0; transform: scale(0.5) translate(var(--tx0), var(--ty0)); }
+    50%  { opacity: 1; }
+    100% { opacity: 0; transform: scale(1.2) translate(var(--tx1), var(--ty1)); }
+  }
+
+  .btn-next-screen {
+    margin-top: 30px; padding: 12px 30px; font-size: 16px; font-weight: 700;
+    font-family: 'Quicksand', sans-serif; color: white; border: none; border-radius: 30px;
+    background: #ff477e; box-shadow: 0 5px 15px rgba(255, 71, 126, 0.4);
+    cursor: pointer; transition: all 0.3s ease; z-index: 5;
+  }
+  .btn-next-screen:hover { background: #ff2a6d; transform: scale(1.05); }
+
+  /* ================= CARD SCREEN ================= */
+  #cardScreen {
+    display: none; flex-direction: column; align-items: center; justify-content: center;
+    height: 100vh; width: 100vw; position: absolute; top: 0; left: 0;
+    background: #ffdef0; 
+    z-index: 30; overflow: hidden;
+  }
+
+  .confetti { position: absolute; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+  .confetti-piece {
+    position: absolute; width: 10px; height: 20px; background: #ff477e;
+    top: -20px; opacity: 0; animation: fall 4s linear infinite;
+  }
+  .confetti-piece:nth-child(2n) { background: #ffd700; animation-delay: 0.5s; width: 12px; height: 12px; border-radius: 50%; }
+  .confetti-piece:nth-child(3n) { background: #00e5ff; animation-delay: 1s; }
+  .confetti-piece:nth-child(4n) { background: #ff758c; animation-delay: 1.5s; }
+  @keyframes fall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+
+  .card-title {
+    font-size: 30px; font-weight: bold; color: #ff0a54; z-index: 5;
+    text-shadow: 2px 2px 5px rgba(255, 10, 84, 0.3); margin-bottom: 20px; text-align: center;
+  }
+
+  /* --- CẤU TRÚC THIỆP 3D --- */
+  .card-container { position: relative; width: 320px; height: 420px; perspective: 1500px; z-index: 5; }
+  
   .card-cover {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    transform-origin: left center;
-    transform-style: preserve-3d;
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    transform-origin: left center; transform-style: preserve-3d;
     transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
     z-index: 2;
   }
-  /* Lật bìa thiệp */
-  .card-cover.open {
-    transform: rotateY(-140deg);
-  }
-
-  .cover-front, .cover-back {
-    position: absolute;
-    width: 100%; height: 100%;
-    backface-visibility: hidden;
-    border-radius: 10px;
-  }
-
-  /* Mặt trước bìa thiệp */
-  .cover-front {
-    background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 30px;
-    font-weight: bold;
-    box-shadow: 5px 5px 20px rgba(0,0,0,0.2);
-    border: 2px solid rgba(255,255,255,0.3);
-  }
+  .card-cover.open { transform: rotateY(-140deg); }
   
-  /* Mặt sau của bìa thiệp (khi mở ra) */
-  .cover-back {
-    background: #fdfbfb;
-    transform: rotateY(180deg);
-    box-shadow: inset 5px 0 15px rgba(0,0,0,0.1);
+  .cover-front, .cover-back {
+    position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px;
   }
 
-  /* Cụm 3 nút điều khiển thiệp */
-  .card-controls {
-    margin-top: 40px;
-    display: flex;
-    gap: 15px;
-    z-index: 30;
+  /* --- MẶT NGOÀI THIỆP --- */
+  .cover-front {
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.6), 5px 5px 20px rgba(0,0,0,0.15);
+    border: 3px solid #fff;
+    position: relative; overflow: hidden;
   }
+  /* Ruy băng góc */
+  .cover-front::before {
+    content: ''; position: absolute; top: 25px; left: -35px;
+    width: 120px; height: 25px; background: rgba(255, 255, 255, 0.85);
+    transform: rotate(-45deg); box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  .front-icon { font-size: 70px; margin-bottom: 10px; filter: drop-shadow(2px 5px 5px rgba(0,0,0,0.2)); animation: float 3s ease-in-out infinite; }
+  .cover-front h2 {
+    font-family: 'Quicksand', sans-serif; font-size: 36px; font-weight: bold; color: #fff;
+    text-shadow: 2px 2px 5px rgba(255, 10, 84, 0.5); margin: 0;
+  }
+
+  /* --- MẶT TRONG BÊN TRÁI (CHỨA ẢNH) --- */
+  .cover-back { 
+    background: #fff0f5; transform: rotateY(180deg); 
+    display: flex; align-items: center; justify-content: center;
+    border-right: 1px solid #e0e0e0;
+  }
+  .polaroid {
+    width: 75%; height: 60%; background: white; padding: 10px 10px 45px 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15); transform: rotate(-5deg);
+    position: relative; display: flex; flex-direction: column;
+    transition: transform 0.3s ease;
+  }
+  .polaroid:hover { transform: rotate(0deg) scale(1.05); }
+  .polaroid-img {
+    flex: 1; background: #ffb3c6; display: flex; align-items: center; justify-content: center; 
+    font-size: 40px; overflow: hidden; border: 1px solid #f0f0f0;
+  }
+  .polaroid-img img { width: 100%; height: 100%; object-fit: cover; }
+  .polaroid::after {
+    content: 'Kỷ niệm của chúng mình 💖'; position: absolute; bottom: 12px; left: 0; width: 100%;
+    text-align: center; font-family: 'Quicksand', sans-serif; color: #ff477e; font-weight: 700; font-size: 13px;
+  }
+
+  /* --- MẶT TRONG BÊN PHẢI (CHỨA LỜI CHÚC) --- */
+  .card-inside {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: #fffafb; 
+    background-image: radial-gradient(#ffe0e9 2px, transparent 2px);
+    background-size: 20px 20px;
+    border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    padding: 15px; z-index: 1;
+  }
+  .inside-content {
+    border: 2px dashed #ff9a9e; border-radius: 10px; height: 100%;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    background: rgba(255, 255, 255, 0.85); padding: 20px; text-align: center;
+  }
+  .inside-content h3 { color: #ff0a54; font-size: 26px; margin-bottom: 15px; text-shadow: 1px 1px 0px #ffe0e9; }
+  .inside-content p { color: #555; font-size: 17px; line-height: 1.6; font-weight: 500; margin-bottom: 20px;}
+  .inside-decor { font-size: 22px; letter-spacing: 12px; }
+
+  /* Nút điều khiển */
+  .card-controls { display: flex; gap: 15px; margin-top: 25px; z-index: 5; }
   .card-btn {
-    padding: 12px 20px;
-    font-size: 15px;
-    font-family: 'Quicksand', sans-serif;
-    font-weight: 700;
-    color: #555;
-    border: none;
-    border-radius: 25px;
-    background: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    cursor: pointer;
-    transition: all 0.3s ease;
+    padding: 10px 18px; font-size: 14px; font-family: 'Quicksand', sans-serif; font-weight: 700;
+    color: #555; border: none; border-radius: 25px; background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1); cursor: pointer; transition: 0.2s;
   }
-  .card-btn:hover {
-    background: #fff;
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-  }
-  .btn-next {
-    background: #ff477e !important;
-    color: white !important;
-  }
-  .btn-next:hover {
-    background: #ff2a6d !important;
-  }
+  .card-btn:hover { background: #ffe0e9; color: #ff0a54; transform: translateY(-2px); }
 
   /* ================= HEART SCREEN ================= */
   #heartScreen {
-    display: none; background: #000; height: 100vh; width: 100vw;
-    position: absolute; top: 0; left: 0;
+    display: none; background: #000; height: 100vh; width: 100vw; position: absolute; top: 0; left: 0; z-index: 40;
   }
-  #pinkboard {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    animation: heartbeat 1.5s infinite;
-  }
-  @keyframes heartbeat {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
-  }
+  #pinkboard { position: absolute; top: 0; left: 0; width: 100%; height: 100%; animation: heartbeat 1.5s infinite; }
+  @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
   
   #backBtn {
     position: absolute; top: 30px; left: 50%; transform: translateX(-50%);
     padding: 10px 25px; font-size: 15px; font-weight: 700; color: #fff;
     border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 30px;
     background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(5px);
-    cursor: pointer; transition: all 0.3s ease; z-index: 20;
-  }
-  #backBtn:hover {
-    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer; z-index: 50;
   }
 
+  /* ================= FLAME ANIMATION ================= */
+  @keyframes flameWave {
+    0%   { d: path("M10,32 C7,24 4,18 10,10 C13,5 17,2 20,0 C23,2 27,5 30,10 C36,18 33,24 30,32 C27,38 13,38 10,32 Z"); transform: scaleX(1);   }
+    25%  { d: path("M10,32 C6,23 3,17 9,9   C12,4 17,1 20,0 C23,1 28,4 31,9  C37,17 34,23 30,32 C27,38 13,38 10,32 Z"); transform: scaleX(0.95); }
+    50%  { d: path("M11,32 C8,23 5,17 11,9  C14,4 17,1 20,0 C23,1 26,4 29,9  C35,17 32,23 29,32 C26,38 14,38 11,32 Z"); transform: scaleX(1.05); }
+    75%  { d: path("M10,32 C7,24 4,18 10,10 C13,5 17,2 20,0 C23,2 27,5 30,10 C36,18 33,24 30,32 C27,38 13,38 10,32 Z"); transform: scaleX(0.98); }
+    100% { d: path("M10,32 C7,24 4,18 10,10 C13,5 17,2 20,0 C23,2 27,5 30,10 C36,18 33,24 30,32 C27,38 13,38 10,32 Z"); transform: scaleX(1);   }
+  }
+  @keyframes innerFlame {
+    0%,100% { opacity: 0.9; transform: scaleY(1)   scaleX(0.85) translateY(0);   }
+    50%      { opacity: 1;   transform: scaleY(1.08) scaleX(0.75) translateY(-1px); }
+  }
+  @keyframes flameFlicker {
+    0%,100% { transform: translateX(0)   rotate(-1deg); }
+    33%     { transform: translateX(-2px) rotate(2deg);  }
+    66%     { transform: translateX(2px)  rotate(-2deg); }
+  }
+  @keyframes sparkleFloat {
+    0%   { opacity: 1; transform: translate(0, 0)          scale(1);   }
+    100% { opacity: 0; transform: translate(var(--sx), var(--sy)) scale(0); }
+  }
 </style>
 </head>
 
 <body>
 
-<audio id="bgMusic" src="Kho Báu.mp3" loop></audio>
+<audio id="bgMusic" src="Kho Báu.mp3" loop></audio> 
 
 <div id="loginScreen">
   <div class="login-box">
@@ -228,32 +296,187 @@
   </div>
 </div>
 
+<div id="cakeScreen">
+  <div class="neon-text">💕💕HAPPY BIRTHDAY💕💕<br>NGỌC ÁNH!</div>
+  
+  <div class="sparkle-ring"></div>
+  <div class="candle-glow"></div>
+
+  <div class="cake-wrapper" id="cakeWrapper">
+    <svg id="birthdayCake" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 280" width="260" height="300" style="overflow:visible;">
+      <defs>
+        <linearGradient id="cake1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#ffb3c6"/>
+          <stop offset="100%" stop-color="#ff4d84"/>
+        </linearGradient>
+        <linearGradient id="cake2" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#ffd6e8"/>
+          <stop offset="100%" stop-color="#ff85b3"/>
+        </linearGradient>
+        <linearGradient id="frosting" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#fff9fc"/>
+          <stop offset="100%" stop-color="#ffe4f0"/>
+        </linearGradient>
+        <linearGradient id="candleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#fff176"/>
+          <stop offset="50%" stop-color="#ffe082"/>
+          <stop offset="100%" stop-color="#ffd54f"/>
+        </linearGradient>
+        <radialGradient id="flameOuter" cx="50%" cy="75%" r="50%">
+          <stop offset="0%"   stop-color="#fff9c4"/>
+          <stop offset="40%"  stop-color="#ffca28"/>
+          <stop offset="80%"  stop-color="#ff6d00"/>
+          <stop offset="100%" stop-color="#e65100" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="flameInner" cx="50%" cy="80%" r="50%">
+          <stop offset="0%"   stop-color="#ffffff"/>
+          <stop offset="30%"  stop-color="#fff9c4"/>
+          <stop offset="70%"  stop-color="#ffca28"/>
+          <stop offset="100%" stop-color="#ff6d00" stop-opacity="0"/>
+        </radialGradient>
+        <clipPath id="clipTier1">
+          <rect x="20" y="185" width="180" height="68" rx="6"/>
+        </clipPath>
+        <clipPath id="clipTier2">
+          <rect x="45" y="120" width="130" height="68" rx="6"/>
+        </clipPath>
+      </defs>
+
+      <ellipse cx="110" cy="256" rx="90" ry="14" fill="#e8006a" opacity="0.25"/>
+      <rect x="20" y="185" width="180" height="68" rx="8" fill="url(#cake1)"/>
+      <g clip-path="url(#clipTier1)" opacity="0.18">
+        <line x1="50"  y1="185" x2="50"  y2="253" stroke="#fff" stroke-width="8"/>
+        <line x1="80"  y1="185" x2="80"  y2="253" stroke="#fff" stroke-width="8"/>
+        <line x1="110" y1="185" x2="110" y2="253" stroke="#fff" stroke-width="8"/>
+        <line x1="140" y1="185" x2="140" y2="253" stroke="#fff" stroke-width="8"/>
+        <line x1="170" y1="185" x2="170" y2="253" stroke="#fff" stroke-width="8"/>
+      </g>
+      <rect x="20" y="245" width="180" height="8" rx="4" fill="#ff2d72" opacity="0.5"/>
+      <path d="M18,185 Q27,172 38,185 Q49,172 60,185 Q71,172 82,185 Q93,172 104,185 Q115,172 126,185 Q137,172 148,185 Q159,172 170,185 Q181,172 192,185 L200,185 L20,185 Z" fill="url(#frosting)"/>
+      <circle cx="50"  cy="215" r="5" fill="#fff" opacity="0.7"/>
+      <circle cx="80"  cy="220" r="4" fill="#ff9dd6" opacity="0.9"/>
+      <circle cx="110" cy="212" r="5" fill="#fff" opacity="0.7"/>
+      <circle cx="140" cy="218" r="4" fill="#ff9dd6" opacity="0.9"/>
+      <circle cx="170" cy="213" r="5" fill="#fff" opacity="0.7"/>
+      <text x="110" y="240" text-anchor="middle" font-family="Quicksand, sans-serif" font-weight="700" font-size="13" fill="#fff" opacity="0.95" letter-spacing="1">HAPPY BIRTHDAY</text>
+
+      <rect x="45" y="120" width="130" height="68" rx="8" fill="url(#cake2)"/>
+      <g clip-path="url(#clipTier2)" opacity="0.18">
+        <line x1="70"  y1="120" x2="70"  y2="188" stroke="#fff" stroke-width="8"/>
+        <line x1="100" y1="120" x2="100" y2="188" stroke="#fff" stroke-width="8"/>
+        <line x1="130" y1="120" x2="130" y2="188" stroke="#fff" stroke-width="8"/>
+        <line x1="160" y1="120" x2="160" y2="188" stroke="#fff" stroke-width="8"/>
+      </g>
+      <rect x="45" y="180" width="130" height="8" rx="4" fill="#ff2d72" opacity="0.4"/>
+      <path d="M43,120 Q52,107 63,120 Q74,107 85,120 Q96,107 107,120 Q118,107 129,120 Q140,107 151,120 Q162,107 173,120 L175,120 L45,120 Z" fill="url(#frosting)"/>
+      <circle cx="70"  cy="150" r="4.5" fill="#fff" opacity="0.75"/>
+      <circle cx="100" cy="155" r="4"   fill="#ff9dd6" opacity="0.9"/>
+      <circle cx="130" cy="148" r="4.5" fill="#fff" opacity="0.75"/>
+      <circle cx="160" cy="153" r="4"   fill="#ff9dd6" opacity="0.9"/>
+      <text x="110" y="172" text-anchor="middle" font-size="15" fill="#fff" opacity="0.85">♥ ♥ ♥</text>
+
+      <ellipse cx="110" cy="120" rx="65" ry="10" fill="#ffc2d8" opacity="0.4"/>
+      <rect x="75" y="80" width="70" height="44" rx="8" fill="#ffc2d8"/>
+      <path d="M73,80 Q80,68 87,80 Q94,68 101,80 Q108,68 115,80 Q122,68 129,80 Q136,68 143,80 L145,80 L75,80 Z" fill="url(#frosting)"/>
+      <circle cx="93"  cy="102" r="7" fill="#ff5599" opacity="0.8"/>
+      <circle cx="93"  cy="102" r="4" fill="#fff" opacity="0.6"/>
+      <circle cx="110" cy="100" r="7" fill="#ff5599" opacity="0.8"/>
+      <circle cx="110" cy="100" r="4" fill="#fff" opacity="0.6"/>
+      <circle cx="127" cy="102" r="7" fill="#ff5599" opacity="0.8"/>
+      <circle cx="127" cy="102" r="4" fill="#fff" opacity="0.6"/>
+
+      <rect x="102" y="44" width="16" height="40" rx="4" fill="url(#candleGrad)"/>
+      <rect x="102" y="44" width="5" height="40" rx="3" fill="#fff" opacity="0.4"/>
+      <path d="M102,50 Q104,46 106,50 L106,44 L102,44 Z" fill="#fff9c4" opacity="0.7"/>
+      <line x1="110" y1="44" x2="110" y2="36" stroke="#555" stroke-width="1.5" stroke-linecap="round"/>
+
+      <g id="flameGroup" style="transform-origin: 110px 36px;">
+        <ellipse cx="110" cy="24" rx="14" ry="16" fill="#ff6d00" opacity="0.2">
+          <animate attributeName="rx" values="14;16;13;15;14" dur="0.5s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.2;0.35;0.15;0.3;0.2" dur="0.45s" repeatCount="indefinite"/>
+        </ellipse>
+        <path id="flameOuter_path" d="M100,36 C97,28 95,21 100,13 C103,7 107,3 110,0 C113,3 117,7 120,13 C125,21 123,28 120,36 C117,41 103,41 100,36 Z"
+              fill="url(#flameOuter)" style="transform-origin: 110px 18px;">
+          <animateTransform attributeName="transform" type="scale" values="1,1;0.93,1.05;1.05,0.97;0.97,1.03;1,1" dur="0.42s" repeatCount="indefinite" additive="sum"/>
+          <animate attributeName="d"
+            values="M100,36 C97,28 95,21 100,13 C103,7 107,3 110,0 C113,3 117,7 120,13 C125,21 123,28 120,36 C117,41 103,41 100,36 Z;
+                    M99,36 C96,27 93,20 99,12 C102,6 107,2 110,0 C113,2 118,6 121,12 C127,20 124,27 121,36 C118,41 102,41 99,36 Z;
+                    M101,36 C98,28 96,21 101,13 C104,7 107,3 110,0 C113,3 116,7 119,13 C124,21 122,28 119,36 C116,41 104,41 101,36 Z;
+                    M100,36 C97,28 95,21 100,13 C103,7 107,3 110,0 C113,3 117,7 120,13 C125,21 123,28 120,36 C117,41 103,41 100,36 Z"
+            dur="0.38s" repeatCount="indefinite"/>
+        </path>
+        <path d="M104,35 C102,29 101,24 104,17 C106,12 108,8 110,6 C112,8 114,12 116,17 C119,24 118,29 116,35 C114,39 106,39 104,35 Z"
+              fill="url(#flameInner)" opacity="0.95" style="transform-origin: 110px 20px;">
+          <animateTransform attributeName="transform" type="scale" values="0.85,0.9;0.8,0.95;0.88,0.88;0.83,0.93;0.85,0.9" dur="0.35s" repeatCount="indefinite" additive="sum"/>
+        </path>
+        <ellipse cx="110" cy="30" rx="3" ry="5" fill="#fffde7" opacity="0.95">
+          <animate attributeName="ry" values="5;6;4.5;5.5;5" dur="0.3s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.95;1;0.85;1;0.95" dur="0.3s" repeatCount="indefinite"/>
+        </ellipse>
+        <circle cx="110" cy="5" r="2" fill="#fff9c4" opacity="0">
+          <animate attributeName="cy" values="5;-10;-25" dur="1.2s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.6;0.3;0" dur="1.2s" repeatCount="indefinite"/>
+          <animate attributeName="r" values="2;3;1" dur="1.2s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="107" cy="2" r="1.5" fill="#ffcc80" opacity="0">
+          <animate attributeName="cy" values="2;-12;-28" dur="1s" begin="0.3s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.5;0.2;0" dur="1s" begin="0.3s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="113" cy="3" r="1.5" fill="#ffe082" opacity="0">
+          <animate attributeName="cy" values="3;-9;-22" dur="0.9s" begin="0.6s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.5;0.2;0" dur="0.9s" begin="0.6s" repeatCount="indefinite"/>
+        </circle>
+      </g>
+
+      <circle cx="30"  cy="160" r="5" fill="#ffb3d9" opacity="0.6"><animate attributeName="cy" values="160;150;160" dur="2s" repeatCount="indefinite"/></circle>
+      <circle cx="190" cy="155" r="4" fill="#ff85b3" opacity="0.6"><animate attributeName="cy" values="155;145;155" dur="2.3s" repeatCount="indefinite"/></circle>
+      <circle cx="25"  cy="220" r="4" fill="#ffc2d8" opacity="0.5"><animate attributeName="cy" values="220;210;220" dur="1.8s" repeatCount="indefinite"/></circle>
+      <circle cx="195" cy="225" r="5" fill="#ff77aa" opacity="0.5"><animate attributeName="cy" values="225;215;225" dur="2.1s" repeatCount="indefinite"/></circle>
+    </svg>
+  </div>
+
+  <div id="sparksContainer" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:3;"></div>
+
+  <button class="btn-next-screen" onclick="goToCardScreen()">Nhận quà nè ➔</button>
+</div>
+
 <div id="cardScreen">
+  <div class="confetti" id="confetti"></div>
+  <div class="card-title">💕EM BÉ TUỔI 22💕 !</div>
+  
   <div class="card-container">
-    
     <div class="card-inside">
-      <h3>Gửi Bé Iu ❤️</h3>
-      <p>Chúc em luôn xinh đẹp, vui vẻ và hạnh phúc nhé! Cảm ơn em vì đã đến bên anh. Yêu em nhiều lắmmmmm 🥰</p>
+      <div class="inside-content">
+        <h3>Gửi Bé Iu ❤️</h3>
+        <p>Chúc em luôn xinh đẹp, vui vẻ và hạnh phúc nhé! Cảm ơn em vì đã đến bên anh. Yêu em nhiều lắmmmmm 🥰</p>
+        <div class="inside-decor">🎀 🎂 🌸</div>
+      </div>
     </div>
 
     <div class="card-cover" id="myCard">
       <div class="cover-front">
-        Mở ra nè ✨
+        <div class="front-icon">💌</div>
+        <h2>Bé Iu ❤️</h2>
       </div>
-      <div class="cover-back"></div>
+      <div class="cover-back">
+        <div class="polaroid">
+           <div class="polaroid-img">
+             📸
+           </div>
+        </div>
+      </div>
     </div>
-    
   </div>
 
   <div class="card-controls">
     <button class="card-btn" onclick="openCard()">Mở thiệp</button>
     <button class="card-btn" onclick="closeCard()">Đóng thiệp</button>
-    <button class="card-btn btn-next" onclick="goToHeart()">Tiếp theo ➔</button>
+    <button class="card-btn" style="background:#ff477e; color:white;" onclick="goToHeartScreen()">Tiếp theo ➔</button>
   </div>
 </div>
 
 <div id="heartScreen">
-  <button id="backBtn" onclick="backToCard()">← Quay lại thiệp</button>
+  <button id="backBtn" onclick="backToCardScreen()">← Quay lại thiệp</button>
   <canvas id="pinkboard"></canvas>
 </div>
 
@@ -267,39 +490,129 @@ function clearPass(){ input = ""; updateDisplay(); }
 
 function check(){
   if(input === "1604"){
-    // Ẩn màn hình đăng nhập, hiện màn hình thiệp
-    document.getElementById("loginScreen").style.display = "none";
-    document.getElementById("cardScreen").style.display = "flex";
-    
-    // PHÁT NHẠC KHI NHẬP ĐÚNG PASS
     document.getElementById("bgMusic").play();
+    document.getElementById("loginScreen").style.display = "none";
+    document.getElementById("cakeScreen").style.display = "flex";
+    startSparkles();
   } else { 
     alert("Sai mật khẩu rồi người đẹp ơi 😢"); 
     clearPass(); 
   }
 }
 
-// ==== LOGIC ĐIỀU KHIỂN THIỆP ====
-function openCard() {
-  document.getElementById("myCard").classList.add("open");
+// ==== TIA SÁNG XUNG QUANH NẾN ====
+function startSparkles() {
+  const container = document.getElementById("sparksContainer");
+  const cakeWrapper = document.getElementById("cakeWrapper");
+
+  function createSpark() {
+    const rect = cakeWrapper.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const candleTopY = rect.top + rect.height * 0.10;
+
+    const spark = document.createElement("div");
+    const angle  = Math.random() * Math.PI * 2;
+    const radius = 20 + Math.random() * 50;
+    const size   = 3 + Math.random() * 5;
+    const dur    = 0.6 + Math.random() * 0.8;
+    const colors = ["#ffe066","#ffcc00","#ff9900","#fff9c4","#ffdd44"];
+    const color  = colors[Math.floor(Math.random() * colors.length)];
+
+    spark.style.cssText = `
+      position:absolute;
+      left:${centerX - size/2}px;
+      top:${candleTopY - size/2}px;
+      width:${size}px; height:${size}px;
+      border-radius:50%;
+      background:${color};
+      pointer-events:none;
+      --sx:${Math.cos(angle)*radius}px;
+      --sy:${Math.sin(angle)*radius - 20}px;
+      animation: sparkleFloat ${dur}s ease-out forwards;
+      box-shadow: 0 0 ${size*2}px ${color};
+    `;
+    container.appendChild(spark);
+    setTimeout(() => spark.remove(), dur * 1000);
+  }
+
+  setInterval(createSpark, 80);
 }
 
-function closeCard() {
-  document.getElementById("myCard").classList.remove("open");
+// ==== CHUYỂN TỪ BÁNH SANG THIỆP ====
+function goToCardScreen() {
+  document.getElementById("cakeScreen").style.display = "none";
+  document.getElementById("cardScreen").style.display = "flex";
+  createConfetti(); 
 }
 
-function goToHeart() {
+// ==== TẠO PHÁO HOA ====
+function createConfetti() {
+  const container = document.getElementById('confetti');
+  container.innerHTML = ''; 
+  for (let i = 0; i < 50; i++) {
+    const piece = document.createElement('div');
+    piece.classList.add('confetti-piece');
+    piece.style.left = Math.random() * 100 + 'vw';
+    piece.style.animationDelay = Math.random() * 3 + 's';
+    container.appendChild(piece);
+  }
+}
+
+// ==== ĐIỀU KHIỂN THIỆP & HIỆU ỨNG ====
+function openCard() { 
+  document.getElementById("myCard").classList.add("open"); 
+  releaseMiniHearts(); // Kích hoạt hiệu ứng tim bay ra
+}
+
+function closeCard() { 
+  document.getElementById("myCard").classList.remove("open"); 
+}
+
+function releaseMiniHearts() {
+  const container = document.getElementById('cardScreen');
+  for(let i = 0; i < 20; i++) {
+    let heart = document.createElement('div');
+    heart.innerHTML = ['❤️', '💖', '✨', '🌸'][Math.floor(Math.random() * 4)];
+    heart.style.position = 'absolute';
+    heart.style.fontSize = (Math.random() * 15 + 15) + 'px';
+    heart.style.left = '50%';
+    heart.style.top = '50%';
+    heart.style.transform = 'translate(-50%, -50%)';
+    heart.style.opacity = '1';
+    heart.style.transition = 'all 1.5s cubic-bezier(0.25, 1, 0.5, 1)';
+    heart.style.zIndex = '40';
+    heart.style.pointerEvents = 'none';
+    heart.style.filter = 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))';
+    container.appendChild(heart);
+    
+    // Tạo hướng bay ngẫu nhiên
+    setTimeout(() => {
+      const angle = Math.random() * Math.PI * 2;
+      const radius = Math.random() * 150 + 100;
+      const tx = Math.cos(angle) * radius;
+      const ty = Math.sin(angle) * radius - 50;
+      heart.style.transform = `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(1.5) rotate(${Math.random()*90-45}deg)`;
+      heart.style.opacity = '0';
+    }, 50);
+    
+    // Xoá phần tử sau khi bay xong
+    setTimeout(() => { heart.remove(); }, 1500);
+  }
+}
+
+// ==== CHUYỂN TỪ THIỆP SANG TRÁI TIM ====
+function goToHeartScreen() {
   document.getElementById("cardScreen").style.display = "none";
   document.getElementById("heartScreen").style.display = "block";
-  startHeart(); // Khởi chạy hiệu ứng hạt trái tim
+  startHeart();
 }
 
-function backToCard() {
+function backToCardScreen() {
   document.getElementById("heartScreen").style.display = "none";
   document.getElementById("cardScreen").style.display = "flex";
 }
 
-// ==== LOGIC TRÁI TIM (Giữ nguyên không đổi) ====
+// ==== LOGIC TRÁI TIM ====
 function startHeart() {
   var settings = { particles: { length: 5000, duration: 2.5, velocity: 200, effect: -0.6, size: 13 } };
   (function(){var b=0;var c=["ms","moz","webkit","o"];for(var a=0;a<c.length&&!window.requestAnimationFrame;++a){window.requestAnimationFrame=window[c[a]+"RequestAnimationFrame"];window.cancelAnimationFrame=window[c[a]+"CancelAnimationFrame"]||window[c[a]+"CancelRequestAnimationFrame"]}if(!window.requestAnimationFrame){window.requestAnimationFrame=function(h,e){var d=new Date().getTime();var f=Math.max(0,16-(d-b));var g=window.setTimeout(function(){h(d+f)},f);b=d+f;return g}}})();
